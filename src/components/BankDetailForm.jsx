@@ -8,10 +8,35 @@ const BankDetailForm = ({
   bankDetails,
   setBankDetails,
 }) => {
+  const [IfscValid, setIfscValid] = useState(true);
+  const [acnoValid, setAcnoValid] = useState(true);
+  const [achValid, setAchValid] = useState(true);
+  const [acnoUSAValid, setAcnoUSAValid] = useState(true);
+
   const currencies = {
     India: "INR",
     USA: "USD",
   };
+
+  const checkFormValidity = () => {
+    if (country === "India") {
+      if (!IfscValid || bankDetails.forIndia.ifsc === "") {
+        return false;
+      }
+      if (!acnoValid || bankDetails.forIndia.acno === "") {
+        return false;
+      }
+    } else {
+      if (!achValid || bankDetails.forUSA.ach === "") {
+        return false;
+      }
+      if (!acnoUSAValid || bankDetails.forUSA.acno === "") {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const changeCountry = (event) => {
     setCountry(event.target.value);
   };
@@ -23,6 +48,22 @@ const BankDetailForm = ({
     });
   };
 
+  const changeACH = (event) => {
+    setBankDetails({
+      ...bankDetails,
+      forUSA: { ...bankDetails.forUSA, ach: event.target.value },
+    });
+    setAchValid(/^[0-9]{6}$/.test(event.target.value));
+  };
+
+  const changeAcnoUSA = (event) => {
+    setBankDetails({
+      ...bankDetails,
+      forUSA: { ...bankDetails.forUSA, acno: event.target.value },
+    });
+    setAcnoUSAValid(/^[0-9]*$/.test(event.target.value));
+  };
+
   const changeAccountType = (event) => {
     setBankDetails({
       ...bankDetails,
@@ -30,47 +71,70 @@ const BankDetailForm = ({
     });
   };
 
+  const changeIFSC = (event) => {
+    setBankDetails({
+      ...bankDetails,
+      forIndia: { ...bankDetails.forIndia, ifsc: event.target.value },
+    });
+    setIfscValid(/^[A-Z]{4}0[A-Z0-9]{6}$/.test(event.target.value));
+  };
+
+  const changeAcNoIndia = (event) => {
+    setBankDetails({
+      ...bankDetails,
+      forIndia: { ...bankDetails.forIndia, acno: event.target.value },
+    });
+    setAcnoValid(/^[0-9]*$/.test(event.target.value));
+  };
+
   const goPrevious = () => {
     setStage(stage - 1);
   };
 
-  const goNext = () => {
-    console.log(bankDetails);
-    setStage(stage + 1);
+  const goNext = (event) => {
+    if (checkFormValidity()) {
+      console.log(bankDetails);
+      setStage(stage + 1);
+    }
+    event.preventDefault();
   };
 
   return (
     <form className="flex flex-col w-4/5 text-white mt-4 text-sm md:text-lg">
-      <label htmlFor="country">
+      <label htmlFor="country" className="text-xs md:text-sm self-start ml-4">
         Select Country
-        <select
-          value={country}
-          name=""
-          id="country"
-          onChange={changeCountry}
-          className="w-full h-10 focus:outline-none rounded-md bg-transparent shadow-lg px-4 border-b-4 border-sky-500">
-          <option value="India" className="text-black">
-            India
-          </option>
-          <option value="USA" className="text-black">
-            United States of America
-          </option>
-        </select>
       </label>
-      <label className="mt-4">Currency</label>
+      <select
+        value={country}
+        name=""
+        id="country"
+        onChange={changeCountry}
+        className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 border-b-4 border-sky-500">
+        <option value="India" className="text-black">
+          India
+        </option>
+        <option value="USA" className="text-black">
+          United States of America
+        </option>
+      </select>
+      <label className="text-xs md:text-sm self-start ml-4 mt-4">
+        Currency
+      </label>
       <input
         type="text"
         readOnly
         value={currencies[country]}
-        className="w-full h-10 focus:outline-none rounded-md bg-transparent shadow-lg px-4 text-gray-400 border-l-4 border-gray-400"
+        className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 text-gray-400 border-l-4 border-gray-400"
       />
-      <label className="mt-4">Bank Details format</label>
+      <label className="text-xs md:text-sm self-start ml-4 mt-4">
+        Bank Details format
+      </label>
       {country === "India" && (
         <input
           type="text"
           readOnly
           value="Indian Local"
-          className="w-full h-10 focus:outline-none rounded-md bg-transparent shadow-lg px-4 text-gray-400 border-l-4 border-gray-400"
+          className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 text-gray-400 border-l-4 border-gray-400"
         />
       )}
       {country === "USA" && (
@@ -107,84 +171,94 @@ const BankDetailForm = ({
       )}
 
       {country === "India" && (
-        <div className="mt-6">
+        <div className="flex flex-col mt-2">
           <input
             type="text"
             placeholder="IFSC Code"
             name=""
             id=""
-            className="w-full h-10 focus:outline-none rounded-md bg-transparent shadow-lg px-4 border-l-4 border-sky-500"
+            className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+              IfscValid ? "border-sky-500" : "border-red-500"
+            } focus:outline-none shadow-md rounded-md mt-4`}
             value={bankDetails.forIndia.ifsc}
-            onChange={(e) =>
-              setBankDetails({
-                ...bankDetails,
-                forIndia: { ...bankDetails.forIndia, ifsc: e.target.value },
-              })
-            }
+            onChange={changeIFSC}
           />
+          {!IfscValid && (
+            <span className="self-start text-xs md:text-sm text-red-500 mt-2">
+              Enter a valid IFSC code
+            </span>
+          )}
           <input
             type="text"
             placeholder="Account number"
             name=""
             id=""
-            className="w-full h-10 focus:outline-none rounded-md bg-transparent shadow-lg px-4 mt-4 border-l-4 border-sky-500"
+            className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+              acnoValid ? "border-sky-500" : "border-red-500"
+            } focus:outline-none shadow-md rounded-md mt-4`}
             value={bankDetails.forIndia.acno}
-            onChange={(e) =>
-              setBankDetails({
-                ...bankDetails,
-                forIndia: { ...bankDetails.forIndia, acno: e.target.value },
-              })
-            }
+            onChange={changeAcNoIndia}
           />
+          {!acnoValid && (
+            <span className="self-start text-xs md:text-sm text-red-500 mt-2">
+              Enter a valid Account Number
+            </span>
+          )}
         </div>
       )}
 
       {country === "USA" && bankDetails.forUSA.format === "Local" && (
-        <div className="mt-4">
+        <div className="flex flex-col mt-2">
           <input
             type="text"
-            placeholder="ACH routing  number"
+            placeholder="ACH routing number"
             name=""
             id=""
-            className="w-full h-10 focus:outline-none rounded-md bg-transparent shadow-lg px-4 border-l-4 border-sky-500"
+            className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+              achValid ? "border-sky-500" : "border-red-500"
+            } focus:outline-none shadow-md rounded-md`}
             value={bankDetails.forUSA.ach}
-            onChange={(e) =>
-              setBankDetails({
-                ...bankDetails,
-                forUSA: { ...bankDetails.forUSA, ach: e.target.value },
-              })
-            }
+            onChange={changeACH}
           />
+          {!achValid && (
+            <span className="self-start text-xs md:text-sm text-red-500 ml-4">
+              Enter a valid 6 digit ACH number
+            </span>
+          )}
           <input
             type="text"
             placeholder="Account number"
             name=""
             id=""
-            className="w-full h-10 focus:outline-none rounded-md bg-transparent shadow-lg px-4 my-2 border-l-4 border-sky-500"
+            className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+              acnoUSAValid ? "border-sky-500" : "border-red-500"
+            } focus:outline-none shadow-md rounded-md mt-2`}
             value={bankDetails.forUSA.acno}
-            onChange={(e) =>
-              setBankDetails({
-                ...bankDetails,
-                forUSA: { ...bankDetails.forUSA, acno: e.target.value },
-              })
-            }
+            onChange={changeAcnoUSA}
           />
-          <label htmlFor="account-type" className="">
+          {!acnoUSAValid && (
+            <span className="self-start text-xs md:text-sm text-red-500 ml-4">
+              Enter a valid Account number
+            </span>
+          )}
+          <label
+            htmlFor="account-type"
+            className="text-xs md:text-sm self-start ml-4 mt-4">
             Account Type
-            <select
-              value={bankDetails.forUSA.type}
-              name=""
-              id="account-type"
-              onChange={changeAccountType}
-              className="w-full h-10 focus:outline-none rounded-md bg-transparent shadow-lg px-4 border-b-4 border-sky-500">
-              <option value="Checking" className="text-black">
-                Checking
-              </option>
-              <option value="Saving" className="text-black">
-                Savings
-              </option>
-            </select>
           </label>
+          <select
+            value={bankDetails.forUSA.type}
+            name=""
+            id="account-type"
+            onChange={changeAccountType}
+            className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 border-b-4 border-sky-500">
+            <option value="Checking" className="text-black">
+              Checking
+            </option>
+            <option value="Saving" className="text-black">
+              Savings
+            </option>
+          </select>
         </div>
       )}
       {country === "USA" && bankDetails.forUSA.format === "Swift" && (
@@ -194,7 +268,7 @@ const BankDetailForm = ({
             placeholder="Swift Code"
             name=""
             id=""
-            className="w-full h-10 focus:outline-none rounded-md bg-transparent shadow-lg px-4 mt-4 border-l-4 border-sky-500"
+            className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 mt-4 border-l-4 border-sky-500"
             value={bankDetails.forUSA.swift}
             onChange={(e) =>
               setBankDetails({

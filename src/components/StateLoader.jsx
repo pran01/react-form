@@ -1,11 +1,11 @@
 const StateLoader = ({ stage }) => {
   return (
-    <div className="flex items-center justify-center mt-4 text-xs md:text-sm text-white">
+    <div className="flex items-center justify-center mt-4 text-xs text-white">
       <div className="flex flex-col items-center">
         <div
           className={`w-6 h-6 rounded-full bg-${
-            stage >= 1 ? "blue" : "gray"
-          }-500 text-sm`}>
+            stage >= 1 ? "sky-500" : "gray-400"
+          } text-sm flex justify-center items-center`}>
           1
         </div>
         Benificiary
@@ -14,8 +14,8 @@ const StateLoader = ({ stage }) => {
       <div className="flex flex-col items-center">
         <div
           className={`w-6 h-6 rounded-full bg-${
-            stage >= 2 ? "blue" : "gray"
-          }-500 text-sm`}>
+            stage >= 2 ? "sky-500" : "gray-400"
+          } text-sm flex justify-center items-center`}>
           2
         </div>
         Bank Details
@@ -24,8 +24,8 @@ const StateLoader = ({ stage }) => {
       <div className="flex flex-col items-center">
         <div
           className={`w-6 h-6 rounded-full bg-${
-            stage >= 3 ? "blue" : "gray"
-          }-500 text-sm`}>
+            stage >= 3 ? "sky-500" : "gray-400"
+          } text-sm flex justify-center items-center`}>
           3
         </div>
         Address

@@ -1,44 +1,99 @@
+import { useState } from "react";
+
 const BusinessForm = ({ stage, setStage, businessData, setBusinessData }) => {
+  const [emailValid, setEmailValid] = useState(true);
+  const [cNameValid, setCNameValid] = useState(true);
+  const [numberValid, setNumberValid] = useState(true);
+  const [formValid, setFormValid] = useState(false);
+
+  const checkFormValid = () => {
+    if (!cNameValid || businessData.cName === "") {
+      return false;
+    }
+    if (!emailValid || businessData.email === "") {
+      return false;
+    }
+    if (!numberValid || businessData.number === "") {
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (e) => {
-    console.log(businessData);
-    setStage(stage + 1);
+    if (checkFormValid()) {
+      console.log(businessData);
+      setStage(stage + 1);
+    }
     e.preventDefault();
+  };
+  const changeEmail = (event) => {
+    setBusinessData({ ...businessData, email: event.target.value });
+    setEmailValid(
+      event.target.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
+    );
+  };
+  const changeCName = (event) => {
+    setBusinessData({ ...businessData, cName: event.target.value });
+    setCNameValid(/^[A-Za-z]*$/.test(event.target.value));
+    setFormValid(checkFormValid());
+  };
+  const changeNumber = (event) => {
+    setBusinessData({ ...businessData, number: event.target.value });
+    setNumberValid(
+      /^[0-9]*$/.test(event.target.value) && event.target.value.length === 10
+    );
+    setFormValid(checkFormValid());
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col w-4/5 items-center text-sm md:text-lg">
+      className="flex flex-col w-4/5 items-center text-sm md:text-lg text-white">
       <input
         type="text"
-        value={businessData.cname}
-        onChange={(e) =>
-          setBusinessData({ ...businessData, cname: e.target.value })
-        }
+        value={businessData.cName}
+        onChange={changeCName}
         placeholder="Company Name"
-        className="w-full h-12 px-4 bg-transparent border-l-4 mb-4 border-sky-500 focus:outline-none shadow-md rounded-md"
+        className={`w-full h-12 px-4 bg-transparent border-l-4 ${
+          cNameValid ? "border-sky-500" : "border-red-500"
+        } focus:outline-none shadow-md rounded-md mt-4`}
       />
+      {!cNameValid && (
+        <span className="self-start text-xs md:text-sm text-red-500 mt-2">
+          Enter a valid name
+        </span>
+      )}
       <input
         type="email"
         value={businessData.email}
-        onChange={(e) =>
-          setBusinessData({ ...businessData, email: e.target.value })
-        }
-        placeholder="Company Email"
-        className="w-full h-12 px-4 bg-transparent border-l-4 mb-4 border-sky-500 focus:outline-none shadow-md rounded-md"
+        onChange={changeEmail}
+        placeholder="Email"
+        className={`w-full h-12 px-4 bg-transparent border-l-4 ${
+          emailValid ? "border-sky-500" : "border-red-500"
+        } focus:outline-none shadow-md rounded-md mt-4`}
       />
+      {!emailValid && (
+        <span className="self-start text-xs md:text-sm text-red-500 mt-2">
+          Enter a valid email
+        </span>
+      )}
       <input
         type="number"
         value={businessData.number}
-        onChange={(e) =>
-          setBusinessData({ ...businessData, number: e.target.value })
-        }
-        placeholder="Contact Number"
-        className="w-full h-12 px-4 bg-transparent border-l-4 mb-4 border-sky-500 focus:outline-none shadow-md rounded-md"
+        onChange={changeNumber}
+        placeholder="Number"
+        className={`w-full h-12 px-4 bg-transparent border-l-4 ${
+          numberValid ? "border-sky-500" : "border-red-500"
+        } focus:outline-none shadow-md rounded-md mt-4`}
       />
+      {!numberValid && (
+        <span className="self-start text-xs md:text-sm text-red-500 mt-2">
+          Enter a valid 10 digit number
+        </span>
+      )}
       <input
         type="submit"
-        className="h-10 w-20 bg-sky-500 shadow-md rounded-md self-end cursor-pointer"
+        className={`h-10 w-20 bg-sky-500 shadow-md rounded-md self-end cursor-pointer mt-6`}
         value={"Next"}
       />
     </form>
