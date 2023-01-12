@@ -56,14 +56,14 @@ const AddressForm = ({ country, stage, setStage, address, setAddress }) => {
         type="text"
         readOnly
         value={country}
-        className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 text-gray-400  border-l-4 border-gray-400"
+        className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-sky-500/60 placeholder:text-gray-300 shadow-lg px-4 text-gray-400  border-l-4 border-gray-400"
       />
       <input
         type="text"
         placeholder="City"
         value={address.city}
         onChange={changeCity}
-        className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+        className={`w-full h-10 md:h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
           cityValid ? "border-sky-500" : "border-red-500"
         } focus:outline-none shadow-md rounded-md mt-4`}
       />
@@ -73,11 +73,11 @@ const AddressForm = ({ country, stage, setStage, address, setAddress }) => {
         </span>
       )}
       <input
-        type="number"
+        type="text"
         placeholder="Postal Code"
         value={address.postcode}
         onChange={changePostCode}
-        className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+        className={`w-full h-10 md:h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
           postcodeValid ? "border-sky-500" : "border-red-500"
         } focus:outline-none shadow-md rounded-md mt-4`}
       />
@@ -91,7 +91,7 @@ const AddressForm = ({ country, stage, setStage, address, setAddress }) => {
         placeholder="Address"
         value={address.fullAdd}
         onChange={changeFullAdd}
-        className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+        className={`w-full h-10 md:h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
           fullAddValid ? "border-sky-500" : "border-red-500"
         } focus:outline-none shadow-md rounded-md mt-4`}
       />
@@ -100,14 +100,14 @@ const AddressForm = ({ country, stage, setStage, address, setAddress }) => {
           Enter an address
         </span>
       )}
-      <div className="self-end mt-6">
+      <div className="self-center mt-6">
         <button
-          className="h-10 w-20 border-2 border-sky-500 shadow-md rounded-md"
+          className="h-10 w-32 border-2 border-sky-500 shadow-md rounded-md"
           onClick={goPrevious}>
           Previous
         </button>
         <button
-          className="h-10 w-20 bg-sky-500 shadow-md rounded-md text-black ml-4"
+          className="h-10 w-32 bg-sky-500 shadow-md rounded-md text-black ml-4"
           onClick={submitForm}>
           Submit
         </button>

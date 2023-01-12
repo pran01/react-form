@@ -17,7 +17,7 @@ const ModeSelector = ({ setIndividual }) => {
   };
 
   return (
-    <div className="w-4/5 h-20 flex items-center justify-around">
+    <div className="w-4/5 h-8 mt-6 mb-4 flex items-center justify-around">
       <div
         className="w-1/3 h-8 flex justify-center items-center border-2 border-sky-500 bg-sky-500 cursor-pointer rounded-md"
         onClick={changeToIndividual}

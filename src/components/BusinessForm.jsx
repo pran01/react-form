@@ -54,9 +54,9 @@ const BusinessForm = ({ stage, setStage, businessData, setBusinessData }) => {
         value={businessData.cName}
         onChange={changeCName}
         placeholder="Company Name"
-        className={`w-full h-12 px-4 bg-transparent border-l-4 ${
+        className={`w-full h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
           cNameValid ? "border-sky-500" : "border-red-500"
-        } focus:outline-none shadow-md rounded-md mt-4`}
+        } focus:outline-none shadow-md rounded-md mt-6`}
       />
       {!cNameValid && (
         <span className="self-start text-xs md:text-sm text-red-500 mt-2">
@@ -68,9 +68,9 @@ const BusinessForm = ({ stage, setStage, businessData, setBusinessData }) => {
         value={businessData.email}
         onChange={changeEmail}
         placeholder="Email"
-        className={`w-full h-12 px-4 bg-transparent border-l-4 ${
+        className={`w-full h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
           emailValid ? "border-sky-500" : "border-red-500"
-        } focus:outline-none shadow-md rounded-md mt-4`}
+        } focus:outline-none shadow-md rounded-md mt-6`}
       />
       {!emailValid && (
         <span className="self-start text-xs md:text-sm text-red-500 mt-2">
@@ -81,10 +81,10 @@ const BusinessForm = ({ stage, setStage, businessData, setBusinessData }) => {
         type="number"
         value={businessData.number}
         onChange={changeNumber}
-        placeholder="Number"
-        className={`w-full h-12 px-4 bg-transparent border-l-4 ${
+        placeholder="text"
+        className={`w-full h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
           numberValid ? "border-sky-500" : "border-red-500"
-        } focus:outline-none shadow-md rounded-md mt-4`}
+        } focus:outline-none shadow-md rounded-md mt-6`}
       />
       {!numberValid && (
         <span className="self-start text-xs md:text-sm text-red-500 mt-2">
@@ -93,7 +93,7 @@ const BusinessForm = ({ stage, setStage, businessData, setBusinessData }) => {
       )}
       <input
         type="submit"
-        className={`h-10 w-20 bg-sky-500 shadow-md rounded-md self-end cursor-pointer mt-6`}
+        className={`h-10 w-32 bg-sky-500 shadow-md rounded-md self-center cursor-pointer mt-6`}
         value={"Next"}
       />
     </form>

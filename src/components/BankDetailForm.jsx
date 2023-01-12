@@ -109,7 +109,7 @@ const BankDetailForm = ({
         name=""
         id="country"
         onChange={changeCountry}
-        className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 border-b-4 border-sky-500">
+        className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-sky-500/60 placeholder:text-gray-300 shadow-lg px-4 border-b-4 border-sky-500">
         <option value="India" className="text-black">
           India
         </option>
@@ -124,7 +124,7 @@ const BankDetailForm = ({
         type="text"
         readOnly
         value={currencies[country]}
-        className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 text-gray-400 border-l-4 border-gray-400"
+        className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-sky-500/60 placeholder:text-gray-300 shadow-lg px-4 text-gray-400 border-l-4 border-gray-400"
       />
       <label className="text-xs md:text-sm self-start ml-4 mt-4">
         Bank Details format
@@ -134,7 +134,7 @@ const BankDetailForm = ({
           type="text"
           readOnly
           value="Indian Local"
-          className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 text-gray-400 border-l-4 border-gray-400"
+          className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-sky-500/60 placeholder:text-gray-300 shadow-lg px-4 text-gray-400 border-l-4 border-gray-400"
         />
       )}
       {country === "USA" && (
@@ -177,7 +177,7 @@ const BankDetailForm = ({
             placeholder="IFSC Code"
             name=""
             id=""
-            className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+            className={`w-full h-10 md:h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
               IfscValid ? "border-sky-500" : "border-red-500"
             } focus:outline-none shadow-md rounded-md mt-4`}
             value={bankDetails.forIndia.ifsc}
@@ -193,7 +193,7 @@ const BankDetailForm = ({
             placeholder="Account number"
             name=""
             id=""
-            className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+            className={`w-full h-10 md:h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
               acnoValid ? "border-sky-500" : "border-red-500"
             } focus:outline-none shadow-md rounded-md mt-4`}
             value={bankDetails.forIndia.acno}
@@ -214,7 +214,7 @@ const BankDetailForm = ({
             placeholder="ACH routing number"
             name=""
             id=""
-            className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+            className={`w-full h-10 md:h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
               achValid ? "border-sky-500" : "border-red-500"
             } focus:outline-none shadow-md rounded-md`}
             value={bankDetails.forUSA.ach}
@@ -230,7 +230,7 @@ const BankDetailForm = ({
             placeholder="Account number"
             name=""
             id=""
-            className={`w-full h-10 md:h-12 px-4 bg-transparent border-l-4 ${
+            className={`w-full h-10 md:h-12 px-4 bg-sky-500/60 placeholder:text-gray-300 border-l-4 ${
               acnoUSAValid ? "border-sky-500" : "border-red-500"
             } focus:outline-none shadow-md rounded-md mt-2`}
             value={bankDetails.forUSA.acno}
@@ -251,7 +251,7 @@ const BankDetailForm = ({
             name=""
             id="account-type"
             onChange={changeAccountType}
-            className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 border-b-4 border-sky-500">
+            className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-sky-500/60 placeholder:text-gray-300 shadow-lg px-4 border-b-4 border-sky-500">
             <option value="Checking" className="text-black">
               Checking
             </option>
@@ -268,7 +268,7 @@ const BankDetailForm = ({
             placeholder="Swift Code"
             name=""
             id=""
-            className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-transparent shadow-lg px-4 mt-4 border-l-4 border-sky-500"
+            className="w-full h-10 md:h-12 focus:outline-none rounded-md bg-sky-500/60 placeholder:text-gray-300 shadow-lg px-4 mt-4 border-l-4 border-sky-500"
             value={bankDetails.forUSA.swift}
             onChange={(e) =>
               setBankDetails({
@@ -279,14 +279,14 @@ const BankDetailForm = ({
           />
         </div>
       )}
-      <div className="self-end mt-6">
+      <div className="self-center mt-6">
         <button
-          className="h-10 w-20 border-2 border-sky-500 shadow-md rounded-md"
+          className="h-10 w-32 border-2 border-sky-500 shadow-md rounded-md"
           onClick={goPrevious}>
           Previous
         </button>
         <button
-          className="h-10 w-20 bg-sky-500 shadow-md rounded-md text-black ml-4"
+          className="h-10 w-32 bg-sky-500 shadow-md rounded-md text-black ml-4"
           onClick={goNext}>
           Next
         </button>
